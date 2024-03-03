@@ -25,7 +25,7 @@ const SidebarItems = () => {
     // profile will be dynamic route TODO
     { label: "Profile", href: "/profile", icon: FaRegUser },
     { label: "Premium", href: "/premium", icon: FaXTwitter },
-    { label: "More", href: "/more", icon: HiOutlineDotsCircleHorizontal }
+    { label: "More", href: "/more", icon: HiOutlineDotsCircleHorizontal },
   ];
   return (
     <>
