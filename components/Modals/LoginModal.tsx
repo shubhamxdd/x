@@ -4,9 +4,11 @@ import useLoginModal from "@/hooks/useLoginModal";
 import Modal from "./Modal";
 import { useCallback, useState } from "react";
 import Input from "../Input";
+import useRegisterModal from "@/hooks/useRegisterModal";
 
 const LoginModal = () => {
   const { close, isOpen, open } = useLoginModal();
+  const registerModal = useRegisterModal();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -41,6 +43,24 @@ const LoginModal = () => {
       />
     </div>
   );
+  const footer = (
+    <div className="mt-4 text-neutral-400 text-center ">
+      <p className="">
+        Dont have an account?{" "}
+        <span
+          onClick={useCallback(() => {
+            if (isLoading) return;
+            close();
+            registerModal.open();
+          }, [close, registerModal, isLoading])}
+          className="text-white font-bold cursor-pointer hover:underline"
+        >
+          {" "}
+          Sign Up{" "}
+        </span>
+      </p>
+    </div>
+  );
 
   return (
     <Modal
@@ -51,6 +71,7 @@ const LoginModal = () => {
       actionLabel="Login"
       disabled={isLoading}
       body={body}
+      footer={footer}
     />
   );
 };
