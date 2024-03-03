@@ -5,7 +5,7 @@ const RightBar = () => {
         <input
           placeholder="Search"
           type="text"
-          className="w-full px-4 py-2 rounded-full  text-white bg-neutral-800 active:bg-black focus:bg-black placeholder-neutral-600 focus:outline-none focus:ring-2 focus:ring-blue-600"
+          className="w-full px-4 py-2 rounded-full  text-white bg-neutral-800 active:bg-black focus:bg-black placeholder-neutral-600 focus:outline-none focus:ring-[1px] focus:ring-blue-600"
         />
       </div>
       <div className="mb-6 bg-neutral-800 rounded-2xl text-white py-2 px-4">
