@@ -1,10 +1,11 @@
+import Header from "@/components/Header";
 import { Metadata } from "next";
 
 export default function Home() {
   return (
-    <div>
-      <h1 className="text-2xl text-center font-semibold text-white">Hiiiiii</h1>
-    </div>
+    <>
+      <Header label="Home" />
+    </>
   );
 }
 
