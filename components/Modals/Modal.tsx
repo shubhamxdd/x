@@ -2,7 +2,7 @@
 
 import { useCallback } from "react";
 import { IoClose } from "react-icons/io5";
-import Button from "./Button";
+import Button from "../Button";
 
 interface ModalProps {
   isOpen?: boolean;
