@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { IoClose } from "react-icons/io5";
 import Button from "../Button";
 
@@ -30,6 +30,22 @@ const Modal = ({
     onClose();
   }, [disabled, onClose]);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        handleClose();
+      }
+    };
+
+    if (isOpen) {
+      window.addEventListener("keydown", handleKeyDown);
+    }
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen, handleClose]);
+
   const handleSubmit = useCallback(() => {
     if (disabled) return;
     onSubmit();
@@ -51,7 +67,7 @@ const Modal = ({
                 <IoClose color="white" size={28} />
               </button>
             </div>
-            <div className="relative p-10 flex-auto ">{body}</div>
+            <div className="relative px-10 py-5 flex-auto ">{body}</div>
             <div className="flex flex-col gap-2 p-10">
               <Button
                 disabled={disabled}
