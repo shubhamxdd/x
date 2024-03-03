@@ -21,6 +21,12 @@ const RegisterModal = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const onLogin = useCallback(() => {
+    if (isLoading) return;
+    close();
+    loginModal.open();
+  }, [close, loginModal, isLoading]);
+
   const onSubmit = useCallback(async () => {
     try {
       setIsLoading(true);
@@ -74,11 +80,7 @@ const RegisterModal = () => {
       <p className="">
         Already have an Account?{" "}
         <span
-          onClick={useCallback(() => {
-            if (isLoading) return;
-            close();
-            loginModal.open();
-          }, [close, loginModal, isLoading])}
+          onClick={onLogin}
           className="text-white font-bold cursor-pointer hover:underline"
         >
           {" "}

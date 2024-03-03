@@ -14,6 +14,12 @@ const LoginModal = () => {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const onRegister = useCallback(() => {
+    if (isLoading) return;
+    close();
+    registerModal.open();
+  }, [close, registerModal, isLoading]);
+
   const onSubmit = useCallback(async () => {
     try {
       setIsLoading(true);
@@ -48,11 +54,7 @@ const LoginModal = () => {
       <p className="">
         Dont have an account?{" "}
         <span
-          onClick={useCallback(() => {
-            if (isLoading) return;
-            close();
-            registerModal.open();
-          }, [close, registerModal, isLoading])}
+          onClick={onRegister}
           className="text-white font-bold cursor-pointer hover:underline"
         >
           {" "}
