@@ -94,7 +94,7 @@ const RegisterModal = () => {
       />
       <Input
         placeholder="Username"
-        onChange={(e) => setUsername(e.target.value)}
+        onChange={(e) => setUsername(e.target.value.toLowerCase())}
         value={username}
         disabled={isLoading}
       />
