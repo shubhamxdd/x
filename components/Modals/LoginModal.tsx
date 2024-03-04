@@ -45,9 +45,7 @@ const LoginModal = () => {
         router.refresh();
       } else {
         console.log("Error while logging in", { error: res.error });
-        // TODO
-        // @ts-ignore 
-        toast.error("Error while logging in", res.error);
+        toast.error(`Error while logging in ${res.error}`);
       }
       close();
     } catch (error) {

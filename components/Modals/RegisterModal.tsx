@@ -6,8 +6,11 @@ import { useCallback, useState } from "react";
 import Input from "../Input";
 import useLoginModal from "@/hooks/useLoginModal";
 import toast from "react-hot-toast";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const RegisterModal = () => {
+  const router = useRouter();
   // TODO Handle form submission with react-hook-form
 
   const { close, isOpen, open } = useRegisterModal();
@@ -54,10 +57,22 @@ const RegisterModal = () => {
         console.log("Error while registering", errorData.message);
         toast.error(errorData.message);
       } else {
-        console.log("User registered successfully");
-        toast.success("User registered successfully");
+        console.log("Account created successfully");
+        toast.success("Account created successfully");
+        const signin = await signIn("credentials", {
+          email,
+          password,
+          redirect: false,
+        });
+        if (!signin?.error) {
+          console.log("Logged in");
+          router.push("/home");
+          router.refresh();
+        } else {
+          console.log("Error while logging in", { error: signin.error });
+          toast.error(`Error while logging in ${signin.error}`);
+        }
         close();
-        loginModal.open();
       }
 
       console.log("Register Response", res);
@@ -67,7 +82,7 @@ const RegisterModal = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [close, email, password, username, name, confirmPassword, loginModal]);
+  }, [close, email, password, username, name, confirmPassword, router]);
 
   const body = (
     <div className="flex flex-col gap-4">
