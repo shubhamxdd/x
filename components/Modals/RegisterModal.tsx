@@ -5,8 +5,6 @@ import Modal from "./Modal";
 import { useCallback, useState } from "react";
 import Input from "../Input";
 import useLoginModal from "@/hooks/useLoginModal";
-import SignupButton from "../SignupButton";
-import Button from "../Button";
 
 const RegisterModal = () => {
   // TODO Handle form submission with react-hook-form
@@ -30,15 +28,41 @@ const RegisterModal = () => {
   const onSubmit = useCallback(async () => {
     try {
       setIsLoading(true);
-      //   TODO Register
+
+      // TODO Add validation for password and confirm password here
+
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          name,
+          username,
+          password,
+        }),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        console.log("Error while registering", errorData.message);
+        // Add toast here
+      } else {
+        console.log("User registered successfully");
+        // Add toast here
+      }
+
+      console.log("Register Response", res);
 
       close();
     } catch (error) {
       console.log(error);
+      // Add toast here
     } finally {
       setIsLoading(false);
     }
-  }, [close]);
+  }, [close, email, password, username, name]);
 
   const body = (
     <div className="flex flex-col gap-4">

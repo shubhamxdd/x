@@ -5,6 +5,7 @@ import Modal from "./Modal";
 import { useCallback, useState } from "react";
 import Input from "../Input";
 import useRegisterModal from "@/hooks/useRegisterModal";
+import { signIn } from "next-auth/react";
 
 const LoginModal = () => {
   const { close, isOpen, open } = useLoginModal();
@@ -23,15 +24,32 @@ const LoginModal = () => {
   const onSubmit = useCallback(async () => {
     try {
       setIsLoading(true);
-      //   TODO Login
 
+      // TODO Add validation here
+
+      const res = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      });
+
+      console.log("Logging In", { res });
+
+      if (!res?.error) {
+        console.log("Logged in");
+        // push to "/home"
+        // show toast
+        // refresh the router
+      } else {
+        console.log("Error while logging in", { error: res.error });
+      }
       close();
     } catch (error) {
       console.log(error);
     } finally {
       setIsLoading(false);
     }
-  }, [close]);
+  }, [close, email, password]);
 
   const body = (
     <div className="flex flex-col gap-4">
