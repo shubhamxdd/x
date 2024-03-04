@@ -1,3 +1,5 @@
+"use client"
+
 import { IconType } from "react-icons";
 
 interface Props {
@@ -7,9 +9,9 @@ interface Props {
   onClick?: () => void;
 }
 
-const SidebarItem = ({ href, icon: Icon, label }: Props) => {
+const SidebarItem = ({ href, icon: Icon, label, onClick }: Props) => {
   return (
-    <div className="flex flex-row items-center">
+    <div className="flex flex-row items-center" onClick={onClick}>
       <div className="relative rounded-full h-11 w-14 flex items-center justify-center p-2 hover:bg-neutral-300 hover:bg-opacity-10 cursor-pointer lg:hidden">
         <Icon size={24} color="white" />
       </div>

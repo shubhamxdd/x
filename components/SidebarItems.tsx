@@ -13,8 +13,14 @@ import { RiChatForwardFill, RiLogoutBoxLine } from "react-icons/ri";
 import SidebarItem from "./SidebarItem";
 import { HiOutlineDotsCircleHorizontal } from "react-icons/hi";
 import SidebarTweetButton from "./SidebarTweetButton";
+import { signOut } from "next-auth/react";
 
-const SidebarItems = () => {
+interface SidebarItemsProps {
+  // TODO: define session type
+  session?: any;
+}
+
+const SidebarItems = ({ session }: SidebarItemsProps) => {
   const links = [
     { label: "Home", href: "/", icon: PiHouseFill },
     // { label: "Explore", href: "/explore", icon: FaMagnifyingGlass },
@@ -37,7 +43,13 @@ const SidebarItems = () => {
           icon={item.icon}
         />
       ))}
-      <SidebarItem onClick={() => {}} label="Logout" icon={RiLogoutBoxLine} />
+      {session?.user?.email && (
+        <SidebarItem
+          onClick={() => signOut()}
+          label="Logout"
+          icon={RiLogoutBoxLine}
+        />
+      )}
       <SidebarTweetButton />
     </>
   );
