@@ -1,13 +1,25 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import prismaClient from "@/libs/prisma";
-import { headers } from "next/headers";
 
 export async function POST(request: Request) {
   try {
-    const { email, username, password, name } = await request.json();
+    const { email, username, password, name, confirmPassword } =
+      await request.json();
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    if (!email || !username || !password || !name || !confirmPassword) {
+      return NextResponse.json(
+        { message: "Please fill all the fields" },
+        { status: 400 }
+      );
+    }
+
+    if (password !== confirmPassword) {
+      return NextResponse.json(
+        { message: "Password and Confirm Password do not match" },
+        { status: 400 }
+      );
+    }
 
     const findUser = await prismaClient.user.findUnique({
       where: {
@@ -20,6 +32,8 @@ export async function POST(request: Request) {
         message: "User already exists with this email id !",
       });
     }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await prismaClient.user.create({
       data: {

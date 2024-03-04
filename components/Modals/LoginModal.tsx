@@ -6,8 +6,11 @@ import { useCallback, useState } from "react";
 import Input from "../Input";
 import useRegisterModal from "@/hooks/useRegisterModal";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const LoginModal = () => {
+  const router = useRouter();
   const { close, isOpen, open } = useLoginModal();
   const registerModal = useRegisterModal();
 
@@ -37,19 +40,23 @@ const LoginModal = () => {
 
       if (!res?.error) {
         console.log("Logged in");
-        // push to "/home"
-        // show toast
-        // refresh the router
+        router.push("/home");
+        toast.success("Logged in successfully");
+        router.refresh();
       } else {
         console.log("Error while logging in", { error: res.error });
+        // TODO
+        // @ts-ignore 
+        toast.error("Error while logging in", res.error);
       }
       close();
     } catch (error) {
       console.log(error);
+      toast.error("Error while logging in");
     } finally {
       setIsLoading(false);
     }
-  }, [close, email, password]);
+  }, [close, email, password, router]);
 
   const body = (
     <div className="flex flex-col gap-4">

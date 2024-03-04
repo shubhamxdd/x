@@ -5,6 +5,7 @@ import Modal from "./Modal";
 import { useCallback, useState } from "react";
 import Input from "../Input";
 import useLoginModal from "@/hooks/useLoginModal";
+import toast from "react-hot-toast";
 
 const RegisterModal = () => {
   // TODO Handle form submission with react-hook-form
@@ -29,7 +30,10 @@ const RegisterModal = () => {
     try {
       setIsLoading(true);
 
-      // TODO Add validation for password and confirm password here
+      if (password !== confirmPassword) {
+        toast.error("Password and Confirm Password do not match");
+        return;
+      }
 
       const res = await fetch("/api/auth/register", {
         method: "POST",
@@ -41,28 +45,29 @@ const RegisterModal = () => {
           name,
           username,
           password,
+          confirmPassword,
         }),
       });
 
       if (!res.ok) {
         const errorData = await res.json();
         console.log("Error while registering", errorData.message);
-        // Add toast here
+        toast.error(errorData.message);
       } else {
         console.log("User registered successfully");
-        // Add toast here
+        toast.success("User registered successfully");
+        close();
+        loginModal.open();
       }
 
       console.log("Register Response", res);
-
-      close();
     } catch (error) {
       console.log(error);
-      // Add toast here
+      toast.error("Error while registering! Please try again.");
     } finally {
       setIsLoading(false);
     }
-  }, [close, email, password, username, name]);
+  }, [close, email, password, username, name, confirmPassword, loginModal]);
 
   const body = (
     <div className="flex flex-col gap-4">
