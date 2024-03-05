@@ -14,15 +14,9 @@ const handler = NextAuth({
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      // TODO to fix this issue instead of doing return in if blocks do "throw new Error"
-      // @ts-ignore
       async authorize(credentials, req) {
         if (!credentials?.email || !credentials?.password) {
-          // return null;
-          return {
-            status: "error",
-            message: "Email and password are required",
-          };
+          throw new Error("Email and password are required");
         }
 
         const user = await prismaClient.user.findUnique({
@@ -31,21 +25,12 @@ const handler = NextAuth({
           },
         });
 
-        // TODO CHANGE THE MESSAGE
         if (!user) {
-          // return null;
-          return {
-            status: "error",
-            message: "Invalid email",
-          };
+          throw new Error("No user found");
         }
 
         if (!user.hashedPassword) {
-          // return null;
-          return {
-            status: "error",
-            message: "Password is required",
-          };
+          throw new Error("No password found");
         }
 
         const isValidPassword = await bcrypt.compare(
@@ -54,11 +39,7 @@ const handler = NextAuth({
         );
 
         if (!isValidPassword) {
-          // return null;
-          return {
-            status: "error",
-            message: "Invalid password",
-          };
+          throw new Error("Invalid password");
         }
 
         return user;
@@ -73,9 +54,6 @@ const handler = NextAuth({
   session: {
     strategy: "jwt",
   },
-  // jwt: {
-  //   secret: process.env.NEXTAUTH_SECRET_JWT,
-  // },
   secret: process.env.NEXTAUTH_SECRET,
 });
 
