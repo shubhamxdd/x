@@ -1,5 +1,8 @@
-"use client"
+"use client";
 
+import useLoginModal from "@/hooks/useLoginModal";
+import { useRouter } from "next/navigation";
+import { useCallback } from "react";
 import { IconType } from "react-icons";
 
 interface Props {
@@ -7,11 +10,36 @@ interface Props {
   label: string;
   icon: IconType;
   onClick?: () => void;
+  auth?: boolean;
+  session?: any;
 }
 
-const SidebarItem = ({ href, icon: Icon, label, onClick }: Props) => {
+const SidebarItem = ({
+  href,
+  icon: Icon,
+  label,
+  onClick,
+  auth,
+  session,
+}: Props) => {
+  const router = useRouter();
+
+  const { open } = useLoginModal();
+
+  console.log(session);
+
+  const handleClick = useCallback(() => {
+    if (onClick) onClick();
+
+    if (auth && !session) {
+      open();
+    } else if (href) router.push(href);
+  }, [router, onClick, href, session, auth, open]);
+
+  console.log("from sidebarItem", { session });
+
   return (
-    <div className="flex flex-row items-center" onClick={onClick}>
+    <div className="flex flex-row items-center" onClick={handleClick}>
       <div className="relative rounded-full h-11 w-14 flex items-center justify-center p-2 hover:bg-neutral-300 hover:bg-opacity-10 cursor-pointer lg:hidden">
         <Icon size={24} color="white" />
       </div>
