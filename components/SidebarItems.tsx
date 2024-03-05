@@ -1,6 +1,6 @@
 "use client";
 
-import { BiMessage } from "react-icons/bi";
+import { BiLogOut, BiMessage } from "react-icons/bi";
 import {
   FaMagnifyingGlass,
   FaRegBell,
@@ -14,6 +14,8 @@ import SidebarItem from "./SidebarItem";
 import { HiOutlineDotsCircleHorizontal } from "react-icons/hi";
 import SidebarTweetButton from "./SidebarTweetButton";
 import { signOut } from "next-auth/react";
+import { BiLogIn } from "react-icons/bi";
+import useLoginModal from "@/hooks/useLoginModal";
 
 interface SidebarItemsProps {
   // TODO: define session type
@@ -21,6 +23,7 @@ interface SidebarItemsProps {
 }
 
 const SidebarItems = ({ session }: SidebarItemsProps) => {
+  const { open } = useLoginModal();
   const links = [
     { label: "Home", href: "/", icon: PiHouseFill },
     // { label: "Explore", href: "/explore", icon: FaMagnifyingGlass },
@@ -43,12 +46,10 @@ const SidebarItems = ({ session }: SidebarItemsProps) => {
           icon={item.icon}
         />
       ))}
-      {session?.user?.email && (
-        <SidebarItem
-          onClick={() => signOut()}
-          label="Logout"
-          icon={RiLogoutBoxLine}
-        />
+      {session?.user?.email ? (
+        <SidebarItem onClick={() => signOut()} label="Logout" icon={BiLogOut} />
+      ) : (
+        <SidebarItem onClick={() => open()} label="Login" icon={BiLogIn} />
       )}
       <SidebarTweetButton />
     </>
