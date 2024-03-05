@@ -21,6 +21,8 @@ const RegisterModal = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showCPassword, setShowCPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const onLogin = useCallback(() => {
@@ -29,8 +31,19 @@ const RegisterModal = () => {
     loginModal.open();
   }, [close, loginModal, isLoading]);
 
+  const handleClick = useCallback(() => {
+    return setShowPassword(!showPassword);
+  }, [showPassword]);
+  const handleConfirmClick = useCallback(() => {
+    return setShowCPassword(!showCPassword);
+  }, [showCPassword]);
+
   const onSubmit = useCallback(async () => {
     try {
+      if (!email || !name || !username || !password || !confirmPassword) {
+        toast.error("Please fill all the fields");
+        return;
+      }
       setIsLoading(true);
 
       if (password !== confirmPassword) {
@@ -104,18 +117,36 @@ const RegisterModal = () => {
         value={email}
         disabled={isLoading}
       />
-      <Input
-        placeholder="Password"
-        onChange={(e) => setPassword(e.target.value)}
-        value={password}
-        disabled={isLoading}
-      />
-      <Input
-        placeholder="Confirm Password"
-        onChange={(e) => setConfirmPassword(e.target.value)}
-        value={confirmPassword}
-        disabled={isLoading}
-      />
+      <div className="flex gap-2">
+        <Input
+          placeholder="Password"
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
+          type={showPassword ? "text" : "password"}
+          disabled={isLoading}
+        />
+        <button
+          className="bg-sky-500 text-white hover:bg-sky-700 transition px-6 rounded-xl outline-none active:bg-sky-800 my-[0.5px]"
+          onClick={handleClick}
+        >
+          Show
+        </button>
+      </div>
+      <div className="flex gap-2">
+        <Input
+          placeholder="Confirm Password"
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          type={showCPassword ? "text" : "password"}
+          value={confirmPassword}
+          disabled={isLoading}
+        />
+        <button
+          className="bg-sky-500 text-white hover:bg-sky-700 transition px-6 rounded-xl outline-none active:bg-sky-800 my-[0.5px]"
+          onClick={handleConfirmClick}
+        >
+          Show
+        </button>
+      </div>
     </div>
   );
 

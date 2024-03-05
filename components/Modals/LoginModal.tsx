@@ -16,6 +16,7 @@ const LoginModal = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const onRegister = useCallback(() => {
@@ -24,8 +25,17 @@ const LoginModal = () => {
     registerModal.open();
   }, [close, registerModal, isLoading]);
 
+  const handleClick = useCallback(() => {
+    return setShowPassword(!showPassword);
+  }, [showPassword]);
+
   const onSubmit = useCallback(async () => {
     try {
+      if (!email || !password) {
+        toast.error("Please fill all the fields");
+        return;
+      }
+
       setIsLoading(true);
 
       // TODO Add validation here
@@ -64,12 +74,21 @@ const LoginModal = () => {
         value={email}
         disabled={isLoading}
       />
-      <Input
-        placeholder="Password"
-        onChange={(e) => setPassword(e.target.value)}
-        value={password}
-        disabled={isLoading}
-      />
+      <div className="flex gap-2">
+        <Input
+          placeholder="Password"
+          onChange={(e) => setPassword(e.target.value)}
+          type={showPassword ? "text" : "password"}
+          value={password}
+          disabled={isLoading}
+        />
+        <button
+          className="bg-sky-500 text-white hover:bg-sky-700 transition px-6 rounded-xl outline-none active:bg-sky-800 my-[0.5px]"
+          onClick={handleClick}
+        >
+          Show
+        </button>
+      </div>
     </div>
   );
   const footer = (
