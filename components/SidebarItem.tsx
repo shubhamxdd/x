@@ -26,7 +26,6 @@ const SidebarItem = ({
 
   const { open } = useLoginModal();
 
-  console.log(session);
 
   const handleClick = useCallback(() => {
     if (onClick) onClick();
@@ -36,7 +35,7 @@ const SidebarItem = ({
     } else if (href) router.push(href);
   }, [router, onClick, href, session, auth, open]);
 
-  console.log("from sidebarItem", { session });
+  // console.log("from sidebarItem", { session });
 
   return (
     <div className="flex flex-row items-center" onClick={handleClick}>
