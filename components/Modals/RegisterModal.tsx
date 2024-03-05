@@ -67,25 +67,28 @@ const RegisterModal = () => {
 
       if (!res.ok) {
         const errorData = await res.json();
+        // remove message and check for status
         console.log("Error while registering", errorData.message);
         toast.error(errorData.message);
       } else {
         console.log("Account created successfully");
         toast.success("Account created successfully");
-        const signin = await signIn("credentials", {
-          email,
-          password,
-          redirect: false,
-        });
-        if (!signin?.error) {
-          console.log("Logged in");
-          router.push("/home");
-          router.refresh();
-        } else {
-          console.log("Error while logging in", { error: signin.error });
-          toast.error(`Error while logging in ${signin.error}`);
-        }
         close();
+        loginModal.open();
+        // const signin = await signIn("credentials", {
+        //   email,
+        //   password,
+        //   redirect: false,
+        // });
+        // if (!signin?.error) {
+        //   console.log("Logged in");
+        //   router.push("/home");
+        //   router.refresh();
+        //   close();
+        // } else {
+        //   console.log("Error while logging in", { error: signin.error });
+        //   toast.error(`Error while logging in ${signin.error}`);
+        // }
       }
 
       console.log("Register Response", res);
@@ -95,7 +98,7 @@ const RegisterModal = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [close, email, password, username, name, confirmPassword, router]);
+  }, [close, email, password, username, name, confirmPassword, loginModal]);
 
   const body = (
     <div className="flex flex-col gap-4">

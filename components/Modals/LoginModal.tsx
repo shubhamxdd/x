@@ -53,11 +53,11 @@ const LoginModal = () => {
         router.push("/home");
         router.refresh();
         toast.success("Logged in successfully");
+        close();
       } else {
         console.log("Error while logging in", { error: res.error });
-        toast.error(`Error while logging in ${res.error}`);
+        toast.error(res.error);
       }
-      close();
     } catch (error) {
       console.log(error);
       toast.error("Error while logging in");
