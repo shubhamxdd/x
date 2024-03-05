@@ -51,8 +51,8 @@ const LoginModal = () => {
       if (!res?.error) {
         console.log("Logged in");
         router.push("/home");
-        toast.success("Logged in successfully");
         router.refresh();
+        toast.success("Logged in successfully");
       } else {
         console.log("Error while logging in", { error: res.error });
         toast.error(`Error while logging in ${res.error}`);
@@ -86,7 +86,7 @@ const LoginModal = () => {
           className="bg-sky-500 text-white hover:bg-sky-700 transition px-6 rounded-xl outline-none active:bg-sky-800 my-[0.5px]"
           onClick={handleClick}
         >
-          Show
+          {showPassword ? "Hide" : "Show"}
         </button>
       </div>
     </div>

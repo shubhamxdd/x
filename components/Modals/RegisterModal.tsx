@@ -129,7 +129,7 @@ const RegisterModal = () => {
           className="bg-sky-500 text-white hover:bg-sky-700 transition px-6 rounded-xl outline-none active:bg-sky-800 my-[0.5px]"
           onClick={handleClick}
         >
-          Show
+          {showPassword ? "Hide" : "Show"}
         </button>
       </div>
       <div className="flex gap-2">
@@ -144,7 +144,7 @@ const RegisterModal = () => {
           className="bg-sky-500 text-white hover:bg-sky-700 transition px-6 rounded-xl outline-none active:bg-sky-800 my-[0.5px]"
           onClick={handleConfirmClick}
         >
-          Show
+          {showCPassword ? "Hide" : "Show"}
         </button>
       </div>
     </div>
