@@ -16,12 +16,14 @@ import SidebarTweetButton from "./SidebarTweetButton";
 import { signOut } from "next-auth/react";
 import { BiLogIn } from "react-icons/bi";
 import useLoginModal from "@/hooks/useLoginModal";
+import { User } from "@prisma/client";
 
 interface SidebarItemsProps {
   session?: any;
+  user?: User;
 }
 
-const SidebarItems = ({ session }: SidebarItemsProps) => {
+const SidebarItems = ({ session, user }: SidebarItemsProps) => {
   const { open } = useLoginModal();
   const links = [
     { label: "Home", href: "/home", icon: PiHouseFill },
@@ -35,8 +37,12 @@ const SidebarItems = ({ session }: SidebarItemsProps) => {
     { label: "Messages", href: "/messages", icon: BiMessage, auth: true },
     { label: "Grok", href: "/grok", icon: RiChatForwardFill },
     // { label: "Lists", href: "/lists", icon: IoBookmarkOutline },
-    // profile will be dynamic route TODO
-    { label: "Profile", href: "/profile", icon: FaRegUser, auth: true },
+    {
+      label: "Profile",
+      href: `/users/${user?.id}`,
+      icon: FaRegUser,
+      auth: true,
+    },
     { label: "Premium", href: "/premium", icon: FaXTwitter, auth: true },
     { label: "More", href: "#", icon: HiOutlineDotsCircleHorizontal },
   ];
