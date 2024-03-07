@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import Form from "./Form";
 import { getServerSession } from "next-auth";
 import prismaClient from "@/libs/prisma";
+import PostFeed from "./PostFeed";
 
 const HomePage = async () => {
   const session = await getServerSession();
@@ -18,6 +19,7 @@ const HomePage = async () => {
       <Header label="Home" />
       {/* @ts-ignore */}
       <Form placeholder="What's happening" user={user} />
+      <PostFeed  />
     </>
   );
 };
