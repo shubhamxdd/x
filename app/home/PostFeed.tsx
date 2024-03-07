@@ -21,9 +21,11 @@ const PostFeed = ({ userId, user }: PostFeedProps) => {
       setPosts(data);
     };
     fetchPosts();
-  }, [posts]);
+    // todo add 'posts' in dep array
+  }, [userId,posts]);
 
-  if (posts.length === 0) return <div>No posts found</div>;
+  // todo style this div
+  // if (posts.length === 0) return <div className="text-white">No posts found</div>;
 
   return (
     <>

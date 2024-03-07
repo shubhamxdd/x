@@ -14,3 +14,6 @@ export async function GET() {
     return NextResponse.json({ message: "ERROR from users route" });
   }
 }
+
+
+export const dynamic = "force-dynamic"

@@ -5,6 +5,7 @@ import LoginModal from "@/components/Modals/LoginModal";
 import RegisterModal from "@/components/Modals/RegisterModal";
 import { Toaster } from "react-hot-toast";
 import EditModalServer from "@/components/Modals/EditModalServer";
+import dynamic from "next/dynamic";
 
 const inter = Inter({ subsets: ["latin"] });
 

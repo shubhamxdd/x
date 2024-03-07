@@ -5,6 +5,7 @@ import UserHero from "@/app/users/[userId]/UserHero";
 import { User } from "@prisma/client";
 import { useEffect, useState } from "react";
 import UserBio from "./UserBio";
+import PostFeed from "@/app/home/PostFeed";
 
 interface UserComponentProps {
   userId: string;
@@ -28,6 +29,7 @@ const UserComponent = ({ userId, currentUser }: UserComponentProps) => {
       <Header label={user?.name || "Go back"} showBackArrow />
       <UserHero userId={userId} />
       <UserBio userId={userId} currentUser={currentUser} />
+      <PostFeed userId={userId} />
     </>
   );
 };

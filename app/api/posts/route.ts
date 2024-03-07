@@ -51,7 +51,7 @@ export async function GET(request: Request) {
       },
     });
 
-    console.log("All posts", posts);
+    // console.log("All posts", posts);
 
     return NextResponse.json(posts, { status: 200 });
   } catch (error) {
