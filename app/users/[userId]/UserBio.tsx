@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import { useEffect, useMemo, useState } from "react";
 import { User } from "@prisma/client";
 import Button from "@/components/Button";
+import { RxCalendar } from "react-icons/rx";
 
 interface UserBioProps {
   userId: string;
@@ -27,7 +28,7 @@ const UserBio = ({ userId, currentUser }: UserBioProps) => {
     return format(new Date(user.creaatedAt), "MMMM yyyy");
   }, [user?.creaatedAt]);
 
-//   console.log(currentUser?.id, " AND ", userId);
+  //   console.log(currentUser?.id, " AND ", userId);
 
   return (
     <div className="border-b-[1px] border-neutral-800 pb-4">
@@ -39,6 +40,31 @@ const UserBio = ({ userId, currentUser }: UserBioProps) => {
         ) : (
           <Button onClick={() => {}} label="Follow" secondary />
         )}
+      </div>
+      <div className="mt-8 px-4">
+        <div className="flex flex-col">
+          <p className="text-white text-2xl font-semibold">{user?.name}</p>
+          <p className="text-base text-neutral-500">@{user?.username}</p>
+        </div>
+        <div className="flex flex-col mt-4">
+          <p className="text-white">{user?.bio}</p>
+          <div className="flex flex-row items-center gap-2 mt-4 text-neutral-500">
+            <RxCalendar size={20} />
+            <p>Joined {createdAt}</p>
+          </div>
+        </div>
+        <div className="flex flex-row items-center mt-4 gap-6">
+          <div className="flex flex-row items-center gap-1">
+            <p className="text-white">{user?.followingIds?.length}</p>
+            <p className="text-neutral-500">Following</p>
+          </div>
+          <div className="flex flex-row items-center gap-1">
+            {/* TODO FIX THIS  */}
+            {/* @ts-ignore */}
+            <p className="text-white">{user?.followersCount || 0}</p>
+            <p className="text-neutral-500">Followers</p>
+          </div>
+        </div>
       </div>
     </div>
   );
