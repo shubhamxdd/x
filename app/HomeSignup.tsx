@@ -8,12 +8,14 @@ import { FcGoogle } from "react-icons/fc";
 
 const HomeSignup = () => {
   const { open } = useRegisterModal();
+
+  // TODO LOGIN FIX
   const signupButtons = [
     {
       label: "Google",
       icon: FcGoogle,
       onClick: () => {
-        signIn("google");
+        console.log("will be implemented soon");
       },
     },
     {
