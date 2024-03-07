@@ -2,8 +2,6 @@ import prismaClient from "@/libs/prisma";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
-
-
 // To fetch posts created by a user ie from user id
 export async function GET(
   request: Request,
@@ -12,23 +10,15 @@ export async function GET(
   try {
     const session = await getServerSession();
 
-    const user = await prismaClient.user.findUnique({
-      where: {
-        email: session?.user?.email || "",
-      },
-    });
-
-    if (!user)
+    if (!session?.user?.email)
       return NextResponse.json(
         { message: "User not found !" },
         { status: 404 }
       );
 
-    console.log(user);
-
     const posts = await prismaClient.post.findMany({
       where: {
-        id: user.id,
+        userId,
       },
       include: {
         user: true,
@@ -38,6 +28,8 @@ export async function GET(
         createdAt: "desc",
       },
     });
+
+    // console.log({ posts, userId });
 
     return NextResponse.json(posts, { status: 200 });
   } catch (error) {
