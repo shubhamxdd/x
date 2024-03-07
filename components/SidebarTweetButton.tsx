@@ -8,7 +8,7 @@ const SidebarTweetButton = () => {
   const loginModal = useLoginModal();
 
   const onClick = useCallback(() => {
-    // if user is not logged in show login modal else show tweet modal
+    // if user is not logged in show login modal else show tweet modal TODO
     loginModal.open();
   }, [loginModal]);
 

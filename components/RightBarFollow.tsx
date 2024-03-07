@@ -14,7 +14,7 @@ const RightBarFollow = () => {
 
       // todo show ranadom 3 users
       const three = data.splice(0, 3);
-      console.log(three);
+      // console.log(three);
 
       setUsers(three);
     } catch (error) {

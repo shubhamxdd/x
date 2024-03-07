@@ -24,9 +24,14 @@ interface SidebarItemsProps {
 const SidebarItems = ({ session }: SidebarItemsProps) => {
   const { open } = useLoginModal();
   const links = [
-    { label: "Home", href: "/", icon: PiHouseFill },
+    { label: "Home", href: "/home", icon: PiHouseFill },
     // { label: "Explore", href: "/explore", icon: FaMagnifyingGlass },
-    { label: "Notifications", href: "/notifications", icon: FaRegBell,auth: true },
+    {
+      label: "Notifications",
+      href: "/notifications",
+      icon: FaRegBell,
+      auth: true,
+    },
     { label: "Messages", href: "/messages", icon: BiMessage, auth: true },
     { label: "Grok", href: "/grok", icon: RiChatForwardFill },
     // { label: "Lists", href: "/lists", icon: IoBookmarkOutline },

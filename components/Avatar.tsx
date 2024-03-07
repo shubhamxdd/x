@@ -16,7 +16,7 @@ const Avatar = ({ userId, hasBorder, isLarge }: AvatarProps) => {
   const fetchUser = async () => {
     const res = await fetch(`/api/users/${userId}`);
     const data = await res.json();
-    console.log(data);
+    // console.log(data);
     setUser(data);
   };
   const onClick = useCallback(
