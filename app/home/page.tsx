@@ -1,8 +1,25 @@
 import Header from "@/components/Header";
 import { Metadata } from "next";
+import Form from "./Form";
+import { getServerSession } from "next-auth";
+import prismaClient from "@/libs/prisma";
 
-const HomePage = () => {
-  return <Header label="Home" />;
+const HomePage = async () => {
+  const session = await getServerSession();
+
+  const user = await prismaClient.user.findUnique({
+    where: {
+      email: session?.user?.email || "",
+    },
+  });
+
+  return (
+    <>
+      <Header label="Home" />
+      {/* @ts-ignore */}
+      <Form placeholder="What's happening" user={user} />
+    </>
+  );
 };
 
 export default HomePage;
