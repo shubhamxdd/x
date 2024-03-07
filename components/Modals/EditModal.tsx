@@ -37,7 +37,7 @@ const EditModal = ({ user }: EditModalProps) => {
     user?.username,
   ]);
 
-  const { close, open, isOpen } = useEditModal();
+  const { close, isOpen } = useEditModal();
 
   const onSubmit = useCallback(async () => {
     try {
@@ -61,7 +61,7 @@ const EditModal = ({ user }: EditModalProps) => {
       if (res.ok) {
         toast.success("Profile updated successfully");
         close();
-        // router.refresh();
+        router.refresh();
       } else {
         toast.error("Error updating profile", data.error);
       }
@@ -78,12 +78,12 @@ const EditModal = ({ user }: EditModalProps) => {
 
   const body = (
     <div className="flex flex-col gap-4">
-      <ImageUpload
-        value={profileImage}
-        disabled={isLoading}
-        onChange={(image) => setProfileImage(image)}
-        label="Upload profile image"
-      />
+        <ImageUpload
+          value={profileImage}
+          disabled={isLoading}
+          onChange={(image) => setProfileImage(image)}
+          label="Upload profile image"
+        />
       <ImageUpload
         value={coverImage}
         disabled={isLoading}

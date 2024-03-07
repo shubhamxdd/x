@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import Button from "./Button";
 
 interface ImageUploadProps {
   onChange: (base64: string) => void;
@@ -61,12 +62,22 @@ const ImageUpload = ({
       <input {...getInputProps()} />
       {base64 ? (
         <div className="flex items-center justify-center">
-          <Image
-            src={base64 || ""}
-            height={100}
-            width={100}
-            alt="User profile uploaded image"
-          />
+          <div className="flex items-center gap-20">
+            <Image
+              src={base64 || ""}
+              height={100}
+              width={100}
+              alt="User profile uploaded image"
+            />
+            <Button
+              //   @ts-ignore
+              onClick={(e) => {
+                e.stopPropagation();
+                setBase64("");
+              }}
+              label="Remove"
+            />
+          </div>
         </div>
       ) : (
         <p className="text-white">{label}</p>
