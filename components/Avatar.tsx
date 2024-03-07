@@ -2,7 +2,7 @@
 import { User } from "@prisma/client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 interface AvatarProps {
   userId: string;
@@ -13,17 +13,19 @@ interface AvatarProps {
 const Avatar = ({ userId, hasBorder, isLarge }: AvatarProps) => {
   const [user, setUser] = useState<User | null>();
   const router = useRouter();
-  const fetchUser = async () => {
-    const res = await fetch(`/api/users/${userId}`);
-    const data = await res.json();
-    // console.log(data);
-    setUser(data);
-  };
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await fetch(`/api/users/${userId}`);
+      const data = await res.json();
+      setUser(data);
+    };
+
+    fetchUser();
+  }, [userId]);
+
   const onClick = useCallback(
     (e: any) => {
       e.stopPropagation();
-      fetchUser();
-
       const url = `/users/${userId}`;
       router.push(url);
     },
@@ -43,10 +45,7 @@ const Avatar = ({ userId, hasBorder, isLarge }: AvatarProps) => {
         alt="Avatar"
         onClick={onClick}
         fill
-        style={{
-          objectFit: "cover",
-          borderRadius: "100%",
-        }}
+        className="object-cover rounded-full"
       />
     </div>
   );

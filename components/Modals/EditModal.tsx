@@ -7,6 +7,7 @@ import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Modal from "./Modal";
 import Input from "../Input";
+import ImageUpload from "../ImageUpload";
 
 interface EditModalProps {
   user?: User;
@@ -55,10 +56,12 @@ const EditModal = ({ user }: EditModalProps) => {
 
       const data = await res.json();
 
+      console.log(data);
+
       if (res.ok) {
         toast.success("Profile updated successfully");
         close();
-        router.refresh();
+        // router.refresh();
       } else {
         toast.error("Error updating profile", data.error);
       }
@@ -75,6 +78,18 @@ const EditModal = ({ user }: EditModalProps) => {
 
   const body = (
     <div className="flex flex-col gap-4">
+      <ImageUpload
+        value={profileImage}
+        disabled={isLoading}
+        onChange={(image) => setProfileImage(image)}
+        label="Upload profile image"
+      />
+      <ImageUpload
+        value={coverImage}
+        disabled={isLoading}
+        onChange={(image) => setCoverImage(image)}
+        label="Upload cover image"
+      />
       <Input
         placeholder="Name"
         onChange={(e) => setName(e.target.value)}
