@@ -30,12 +30,12 @@ const SidebarItems = ({ session, user }: SidebarItemsProps) => {
     // { label: "Explore", href: "/explore", icon: FaMagnifyingGlass },
     {
       label: "Notifications",
-      href: "/notifications",
+      href: "/",
       icon: FaRegBell,
       auth: true,
     },
-    { label: "Messages", href: "/messages", icon: BiMessage, auth: true },
-    { label: "Grok", href: "/grok", icon: RiChatForwardFill },
+    { label: "Messages", href: "/", icon: BiMessage, auth: true },
+    { label: "Grok", href: "/", icon: RiChatForwardFill },
     // { label: "Lists", href: "/lists", icon: IoBookmarkOutline },
     {
       label: "Profile",
@@ -43,8 +43,8 @@ const SidebarItems = ({ session, user }: SidebarItemsProps) => {
       icon: FaRegUser,
       auth: true,
     },
-    { label: "Premium", href: "/premium", icon: FaXTwitter, auth: true },
-    { label: "More", href: "#", icon: HiOutlineDotsCircleHorizontal },
+    { label: "Premium", href: "/", icon: FaXTwitter, auth: true },
+    { label: "More", href: "/", icon: HiOutlineDotsCircleHorizontal },
   ];
   return (
     <>
@@ -63,7 +63,7 @@ const SidebarItems = ({ session, user }: SidebarItemsProps) => {
       ) : (
         <SidebarItem onClick={() => open()} label="Login" icon={BiLogIn} />
       )}
-      <SidebarTweetButton />
+      <SidebarTweetButton user={user} />
     </>
   );
 };

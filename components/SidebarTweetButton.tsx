@@ -4,12 +4,15 @@ import useLoginModal from "@/hooks/useLoginModal";
 import { useCallback } from "react";
 import { BsFeather } from "react-icons/bs";
 
-const SidebarTweetButton = () => {
+interface SidebarTweetButtonProps {
+  user: any;
+}
+
+const SidebarTweetButton = ({ user }: SidebarTweetButtonProps) => {
   const loginModal = useLoginModal();
 
   const onClick = useCallback(() => {
-    // if user is not logged in show login modal else show tweet modal TODO
-    loginModal.open();
+    if (!user) loginModal.open();
   }, [loginModal]);
 
   return (

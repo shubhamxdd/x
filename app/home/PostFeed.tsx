@@ -11,18 +11,18 @@ interface PostFeedProps {
 
 const PostFeed = ({ userId, user }: PostFeedProps) => {
   const [posts, setPosts] = useState<Post[] | []>([]);
+  const fetchPosts = async () => {
+    let url = userId ? `/api/posts/user/${userId}` : "/api/posts";
+    const res = await fetch(url);
+    const data = await res.json();
+    // console.log(data);
+    setPosts(data);
+  };
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      let url = userId ? `/api/posts/user/${userId}` : "/api/posts";
-      const res = await fetch(url, { cache: "no-store" });
-      const data = await res.json();
-      // console.log(data);
-      setPosts(data);
-    };
     fetchPosts();
     // todo add 'posts' in dep array
-  }, [userId,posts]);
+  }, []);
 
   // todo style this div
   // if (posts.length === 0) return <div className="text-white">No posts found</div>;
