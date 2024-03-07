@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { User } from "@prisma/client";
 import Button from "@/components/Button";
 import { RxCalendar } from "react-icons/rx";
+import useEditModal from "@/hooks/useEditModal";
 
 interface UserBioProps {
   userId: string;
@@ -13,6 +14,9 @@ interface UserBioProps {
 
 const UserBio = ({ userId, currentUser }: UserBioProps) => {
   const [user, setUser] = useState<User | null>();
+
+  const editModal = useEditModal();
+
   const fetchUser = async () => {
     const res = await fetch(`/api/users/${userId}`);
     const data = await res.json();
@@ -35,7 +39,7 @@ const UserBio = ({ userId, currentUser }: UserBioProps) => {
       <div className="flex justify-end mt-2">
         {currentUser?.id === userId ? (
           <>
-            <Button label="Edit" onClick={() => {}} secondary />
+            <Button label="Edit" onClick={editModal.open} secondary />
           </>
         ) : (
           <Button onClick={() => {}} label="Follow" secondary />

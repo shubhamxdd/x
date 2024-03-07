@@ -4,6 +4,7 @@ import "./globals.css";
 import LoginModal from "@/components/Modals/LoginModal";
 import RegisterModal from "@/components/Modals/RegisterModal";
 import { Toaster } from "react-hot-toast";
+import EditModalServer from "@/components/Modals/EditModalServer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,6 +27,7 @@ export default function RootLayout({
         <Toaster />
         <LoginModal />
         <RegisterModal />
+        <EditModalServer />
         {children}
       </body>
     </html>
